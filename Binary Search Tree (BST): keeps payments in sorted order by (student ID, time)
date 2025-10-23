@@ -1,0 +1,35 @@
+class Payment:
+    def __init__(self, student_id, amount):
+        self.student_id = student_id
+        self.amount = amount
+
+class Node:
+    def __init__(self, payment):
+        self.payment = payment
+        self.left = None
+        self.right = None
+
+class PaymentTree:
+    def __init__(self):
+        self.root = None
+
+    def insert(self, payment):
+        def _insert(node, p):
+            if not node:
+                return Node(p)
+            if p.student_id < node.payment.student_id:
+                node.left = _insert(node.left, p)
+            else:
+                node.right = _insert(node.right, p)
+            return node
+        self.root = _insert(self.root, payment)
+
+    def inorder(self):
+        result = []
+        def _in(node):
+            if node:
+                _in(node.left)
+                result.append(node.payment)
+                _in(node.right)
+        _in(self.root)
+        return result
