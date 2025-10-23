@@ -1,0 +1,20 @@
+from collections import deque
+
+class Course:
+    def __init__(self, code, capacity):
+        self.code = code
+        self.capacity = capacity
+        self.enrolled = []          # list of enrolled students
+        self.waitlist = deque()     # queue for extra students
+
+    def register(self, student_id):
+        if len(self.enrolled) < self.capacity:
+            self.enrolled.append(student_id)
+            return "Enrolled successfully"
+        else:
+            self.waitlist.append(student_id)
+            return "Added to waiting list"
+
+    def process_waitlist(self):
+        while len(self.enrolled) < self.capacity and self.waitlist:
+            self.enrolled.append(self.waitlist.popleft())
