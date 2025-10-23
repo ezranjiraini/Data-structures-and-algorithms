@@ -1,0 +1,32 @@
+class Book:
+    def __init__(self, isbn, title, copies=1):
+        self.isbn = isbn
+        self.title = title
+        self.copies = copies
+        self.borrowed = 0
+
+class Library:
+    def __init__(self):
+        self.books = {}
+        self.return_stack = []
+
+    def add_book(self, book):
+        self.books[book.isbn] = book
+
+    def borrow(self, isbn):
+        b = self.books.get(isbn)
+        if b and b.copies > b.borrowed:
+            b.borrowed += 1
+            return "Borrowed successfully"
+        return "Not available"
+
+    def return_book(self, isbn):
+        b = self.books.get(isbn)
+        if b and b.borrowed > 0:
+            b.borrowed -= 1
+            self.return_stack.append(isbn)
+            return "Returned successfully"
+        return "Error"
+
+    def recent_returns(self, n=3):
+        return self.return_stack[-n:]
