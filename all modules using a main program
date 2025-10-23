@@ -1,0 +1,39 @@
+from student_registry import Student, StudentRegistry
+from course_scheduler import Course
+from fee_tracking import Payment, PaymentTree
+from library_system import Book, Library
+from performance_analytics import PerformanceAnalytics
+
+def run_demo():
+    # Initialize modules
+    registry = StudentRegistry()
+    course = Course("CS101", 2)
+    tree = PaymentTree()
+    library = Library()
+    analytics = PerformanceAnalytics()
+
+    # Add sample students
+    registry.add_student(Student(101, "Aisha Mwangi", 2))
+    registry.add_student(Student(102, "David Otieno", 3))
+
+    # Course registration
+    print(course.register(101))
+    print(course.register(102))
+    print(course.register(103))  # waitlisted
+
+    # Payments
+    tree.insert(Payment(101, 5000))
+    tree.insert(Payment(102, 4500))
+
+    # Library
+    library.add_book(Book("978-0-123", "Intro to Algorithms"))
+    print(library.borrow("978-0-123"))
+    print(library.return_book("978-0-123"))
+    print(library.recent_returns())
+
+    # Performance
+    analytics.add_score(101, "Math", 90)
+    analytics.add_score(102, "CS", 85)
+    print(analytics.top_k(2))
+
+run_demo()
